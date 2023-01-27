@@ -68,7 +68,28 @@ export const theme = createTheme(
                 fontSize: "0.75rem",
                 lineHeight: "15px",
                 color: darkGrey
+            },
+            button: {
+                fontFamily: "Plus Jakarta Sans",
+                textTransform: "none",
+                fontWeight: "bold",
             }
         },
+        components: {
+            buttonL: {
+                fontSize: "0.9375rem",
+                borderRadius: "24px",
+                paddingLeft: "24px",
+                paddingRight: "24px",
+                minHeight: "48px",
+            },
+            buttonS: {
+                fontSize: "0.8125rem",
+                borderRadius: "20px",
+                paddingLeft: "24px",
+                paddingRight: "24px",
+                minHeight: "40px",
+            }
+        }
     }
 );
