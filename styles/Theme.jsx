@@ -89,6 +89,10 @@ export const theme = createTheme(
                 paddingLeft: "24px",
                 paddingRight: "24px",
                 minHeight: "40px",
+            },
+            drawer: {
+                widthDesktop: "300px",
+                widthTablet: "240px",
             }
         }
     }

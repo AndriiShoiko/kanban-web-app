@@ -5,12 +5,15 @@ export const DARK_MODE = "dark";
 
 export const ThemeContext = createContext({
     mode: LIGHT_MODE,
-    toogleThemeMode: () => { }
+    drawerIsOpen: false,
+    toogleThemeMode: () => { },
+    toogleDrawerIsOpen: () => { }
 });
 
 export const ThemeContextProvider = (props) => {
 
     const [mode, setMode] = useState(LIGHT_MODE);
+    const [drawerIsOpen, setdrawerOpen] = useState(false);
 
     const toogleThemeMode = () => {
         if (mode === LIGHT_MODE) {
@@ -20,9 +23,19 @@ export const ThemeContextProvider = (props) => {
         }
     }
 
+    const toogleDrawerIsOpen = () => {
+        if (drawerIsOpen) {
+            setdrawerOpen(false);
+        } else {
+            setdrawerOpen(true);
+        }
+    }
+
     const context = {
-        mode: mode,
-        toogleThemeMode: toogleThemeMode
+        mode,
+        drawerIsOpen,
+        toogleThemeMode,
+        toogleDrawerIsOpen
     }
 
     return (
