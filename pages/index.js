@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 
+import { Layout } from "../components/Layout";
 
 import { useContext } from "react";
 import { ThemeContext } from "../store/ThemeContext";
@@ -13,7 +14,7 @@ const HomePage = () => {
     const theme = useContext(ThemeContext);
 
     return (
-        <>
+        <Layout>
             <Typography variant="h1">Welcome to Next.js!</Typography>
             <Typography variant="h2">Welcome to Next.js!</Typography>
             <Typography variant="h3">Welcome to Next.js!</Typography>
@@ -37,7 +38,7 @@ const HomePage = () => {
             <ButtonDestructive onClick={() => theme.toogleThemeMode()}>
                 Button Destructive
             </ButtonDestructive>
-        </>
+        </Layout>
     )
 }
 

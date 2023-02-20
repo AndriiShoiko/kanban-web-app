@@ -52,7 +52,7 @@ export const theme = createTheme(
                 fontWeight: "bold",
                 fontSize: "0.75rem",
                 lineHeight: "17px",
-                letterSpacing: "2.4px",
+                letterSpacing: "1.4px",
                 color: mediumGrey
             },
             body1: {
@@ -73,6 +73,11 @@ export const theme = createTheme(
                 fontFamily: "Plus Jakarta Sans",
                 textTransform: "none",
                 fontWeight: "bold",
+            }
+        },
+        mixins: {
+            toolbar: {
+                minHeight: 96
             }
         },
         components: {

@@ -1,13 +1,14 @@
-import React from 'react';
 import { ThemeContextProvider } from '../store/ThemeContext';
-import { Layout } from '../components/Layout';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from "../styles/Theme";
 
 export default function App({ Component, pageProps }) {
+
     return (
         <ThemeContextProvider>
-            <Layout>
+            <ThemeProvider theme={theme}>
                 <Component {...pageProps} />
-            </Layout>
+            </ThemeProvider>
         </ThemeContextProvider>
     );
 }

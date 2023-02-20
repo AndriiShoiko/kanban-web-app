@@ -1,21 +1,21 @@
-import { useContext } from "react";
 
-import { AppBar, Toolbar, Typography, Stack, Divider, IconButton, Link } from '@mui/material';
-import { ThemeContext } from "../store/ThemeContext";
+import { AppBar, Toolbar, Typography, Stack, Divider, IconButton, Link, Collapse } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import Image from "next/image";
-import logo from "../public/images/main-logo.svg";
+import logo from "../../public/images/main-logo.svg";
 
-import { ButtonPrimaryL } from '../ui/buttons/ButtonPrimaryL';
-import { useDrawerIsOpen } from '../hooks/useDrawerIsOpen';
+import { ButtonPrimaryL } from '../../ui/buttons/ButtonPrimaryL';
+import { useDrawerIsOpen } from '../../hooks/useDrawerIsOpen';
+import { useDarkMode } from "../../hooks/useDarkMode";
 
 const StyledAppBar = styled(AppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    backgroundColor: theme.palette.common.white,
+    shouldForwardProp: (prop) => prop !== 'darkMode',
+})(({ theme, open, darkMode }) => ({
+    backgroundColor: darkMode ? theme.palette.common.darkGrey : theme.palette.common.white,
     boxShadow: "none",
     alignItems: "center",
 
@@ -34,27 +34,34 @@ const StyledAppBar = styled(AppBar, {
 }));
 
 const dividerStyle = (theme) => ({
-    marginLeft: "32px",
-    marginRight: "32px",
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4)
 })
 
 export const Header = (props) => {
 
-    const theme = useContext(ThemeContext);
+    const drawerIsOpen = useDrawerIsOpen();
 
     return (
-        <StyledAppBar position="fixed" open={useDrawerIsOpen()} {...props}>
+        <StyledAppBar position="fixed" open={drawerIsOpen} darkMode={useDarkMode()} {...props}>
             <Toolbar sx={{ width: "100%" }}>
-                <Stack component={Link} sx={{ cursor: "pointer" }}>
-                    <Image src={logo} width={153} height={25} alt="main logo" onClick={() => console.log("click")} />
-                </Stack>
-                <Divider orientation="vertical" flexItem sx={dividerStyle} />
+
+                <Collapse orientation="horizontal" in={!drawerIsOpen}>
+                    <Stack component={Link} sx={{ cursor: "pointer" }} >
+                        <Image src={logo} width={153} height={25} alt="main logo" />
+                    </Stack>
+                </Collapse>
+
+                {!drawerIsOpen &&
+                    <Divider orientation="vertical" flexItem sx={dividerStyle} />
+                }
+
                 <Typography variant="h1" color="#000112">
                     Platform Launch
                 </Typography>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ marginLeft: "auto" }}>
                     <ButtonPrimaryL>+ Add New Task</ButtonPrimaryL>
-                    <IconButton onClick={() => theme.toogleDrawerIsOpen()}>
+                    <IconButton>
                         <MoreVertIcon />
                     </IconButton>
                 </Stack>
