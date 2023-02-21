@@ -3,8 +3,7 @@ import { useContext } from "react";
 import { Drawer } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
-import Image from "next/image";
-import logo from "../../public/images/main-logo.svg";
+import { useDarkMode } from "../../hooks/useDarkMode";
 
 import { useDrawerIsOpen } from '../../hooks/useDrawerIsOpen';
 import { BoardsList } from "./BoardsList";
@@ -12,12 +11,18 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { HideSidebar } from "./HideSidebar";
 
 import { ThemeContext } from "../../store/ThemeContext";
+import { MainLogo } from "../../ui/Logos/MainLogo";
 
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
+const StyledDrawer = styled(Drawer, {
+    shouldForwardProp: (prop) => prop !== 'darkMode'
+})(({ theme, darkMode }) => ({
     flexShrink: 0,
     '& .MuiDrawer-paper': {
         width: theme.components.drawer.widthDesktop,
         boxSizing: 'border-box',
+        ...(darkMode && {
+            backgroundColor: theme.palette.common.darkGrey,
+        }),
     }
 }));
 
@@ -33,7 +38,7 @@ const StyledDrawerHeader = styled('div')(({ theme }) => ({
 export const DrawerHeader = () => {
     return (
         <StyledDrawerHeader>
-            <Image src={logo} width={153} height={25} alt="main logo" />
+            <MainLogo />
         </StyledDrawerHeader>
     )
 }
@@ -47,10 +52,11 @@ export const LeftDrawer = (props) => {
             variant="persistent"
             anchor="left"
             open={useDrawerIsOpen()}
+            darkMode={useDarkMode()}
             {...props}>
             <DrawerHeader />
             <BoardsList />
-            <ThemeSwitcher />
+            <ThemeSwitcher onChange={() => context.toogleThemeMode()} />
             <HideSidebar onClick={() => context.toogleDrawerIsOpen()} />
         </StyledDrawer>
     )

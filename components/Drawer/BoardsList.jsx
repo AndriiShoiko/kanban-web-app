@@ -1,13 +1,12 @@
+import { useState } from 'react';
 import { Tabs, Tab, Link, Typography } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
-import React from 'react';
 
 const TabsStyled = styled(Tabs)(({ theme }) => ({
     textDecoration: "none",
-    //height: "calc(100vh - 275px)"
     height: "100%"
 }));
 
@@ -22,8 +21,8 @@ const TabStyled = styled(Tab, { shouldForwardProp: (prop) => prop !== 'newBoard'
     borderRadius: "0px 100px 100px 0px",
 
     "&:hover": {
-        backgroundColor: alpha(theme.palette.common.mainPurple, 0.1),
-        color: theme.palette.common.mainPurple
+        backgroundColor: theme.palette.menuHover.backgroundColor,
+        color: theme.palette.common.mainPurple,
     },
 
     "&.Mui-selected": {
@@ -49,7 +48,7 @@ const headerStyle = (theme) => ({
 
 export const BoardsList = () => {
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const handleChange = (_, newValue) => {
         setValue(newValue);
@@ -68,8 +67,8 @@ export const BoardsList = () => {
             >
                 <TabStyled icon={<DashboardOutlinedIcon sx={{ fontSize: 16 }} />} label="Item One" iconPosition="start" wrapped />
                 <TabStyled icon={<DashboardOutlinedIcon sx={{ fontSize: 16 }} />} label="Item Two" iconPosition="start" wrapped />
-                <TabStyled icon={<DashboardOutlinedIcon sx={{ fontSize: 16 }} />} label="Item Three" iconPosition="start" wrapped />           
-                                            
+                <TabStyled icon={<DashboardOutlinedIcon sx={{ fontSize: 16 }} />} label="Item Three" iconPosition="start" wrapped />
+
                 <TabStyled icon={<DashboardCustomizeOutlinedIcon sx={{ fontSize: 16 }} />} label="+ Create New Board" iconPosition="start" wrapped newBoard />
             </TabsStyled>
         </>

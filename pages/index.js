@@ -15,7 +15,7 @@ const HomePage = () => {
 
     return (
         <Layout>
-            <Typography variant="h1">Welcome to Next.js!</Typography>
+            {/* <Typography variant="h1">Welcome to Next.js!</Typography>
             <Typography variant="h2">Welcome to Next.js!</Typography>
             <Typography variant="h3">Welcome to Next.js!</Typography>
             <Typography variant="h4">Welcome to Next.js!</Typography>
@@ -37,7 +37,7 @@ const HomePage = () => {
             </ButtonSecondary>
             <ButtonDestructive onClick={() => theme.toogleThemeMode()}>
                 Button Destructive
-            </ButtonDestructive>
+            </ButtonDestructive> */}
         </Layout>
     )
 }

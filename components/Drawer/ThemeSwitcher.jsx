@@ -16,7 +16,7 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
 
 const StyledStack = styled(Stack)(({ theme }) => ({
     color: theme.palette.common.mediumGrey,
-    backgroundColor: theme.palette.common.lightBG,
+    backgroundColor: theme.palette.background.default,
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
     marginBottom: theme.spacing(1),

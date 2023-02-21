@@ -1,15 +1,14 @@
-import { useContext } from "react";
-import { Box, Button } from "@mui/material";
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import { styled } from '@mui/material/styles';
+import { useContext, useMemo } from "react";
+import { Box, Button, CssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme, styled, alpha } from '@mui/material/styles';
+
+import { ThemeContext } from "../../store/ThemeContext";
+import { theme as customTheme } from "../../styles/Theme";
 
 import { Header } from '../Header';
 import { DrawerHeader, LeftDrawer } from "../Drawer";
 
-import { theme } from "../../styles/Theme";
 import { useDrawerIsOpen } from '../../hooks/useDrawerIsOpen';
-import { ThemeContext } from "../../store/ThemeContext";
 
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
@@ -18,7 +17,6 @@ const StyledMain = styled('main', { shouldForwardProp: (prop) => prop !== 'open'
     ({ theme, open }) => ({
         flexGrow: 1,
         marginLeft: 0,
-        backgroundColor: theme.palette.common.lightBG,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -54,6 +52,24 @@ const StyledOpenDrawer = styled(Button)(({ theme }) => ({
 export const Layout = (props) => {
 
     const context = useContext(ThemeContext);
+
+    const theme = useMemo(
+        () => {
+            let baseTheme = { ...customTheme };
+            baseTheme.palette.mode = context.mode;
+
+            if (context.mode === "dark") {
+                baseTheme.palette.background.default = baseTheme.palette.common.darkBG;
+                baseTheme.palette.menuHover.backgroundColor = "white";
+            } else {
+                baseTheme.palette.background.default = baseTheme.palette.common.lightBG;
+                baseTheme.palette.menuHover.backgroundColor = alpha(baseTheme.palette.common.mainPurple, 0.1);
+            }
+
+            return createTheme(baseTheme);
+        },
+        [context.mode],
+    );
 
     return (
         <ThemeProvider theme={theme}>
