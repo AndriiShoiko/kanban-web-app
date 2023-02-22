@@ -81,7 +81,7 @@ export const theme = {
     },
     mixins: {
         toolbar: {
-            minHeight: 96
+            minHeight: 80,
         }
     },
     components: {

@@ -15,6 +15,9 @@ const TabStyled = styled(Tab, { shouldForwardProp: (prop) => prop !== 'newBoard'
     color: theme.palette.common.mediumGrey,
     padding: 0,
     paddingLeft: theme.spacing(4),
+    [theme.breakpoints.down('md')]: {
+        paddingLeft: theme.spacing(3),      
+    },    
     marginRight: "32px",
     minHeight: "48px",
     height: "48px",
@@ -44,6 +47,9 @@ const TabStyled = styled(Tab, { shouldForwardProp: (prop) => prop !== 'newBoard'
 const headerStyle = (theme) => ({
     marginBottom: theme.spacing(2),
     paddingLeft: theme.spacing(4),
+    [theme.breakpoints.down('md')]: {
+        paddingLeft: theme.spacing(3),      
+    }    
 })
 
 export const BoardsList = () => {

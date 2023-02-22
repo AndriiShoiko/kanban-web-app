@@ -18,6 +18,9 @@ const StyledStack = styled(Stack)(({ theme }) => ({
     color: theme.palette.common.mediumGrey,
     backgroundColor: theme.palette.background.default,
     marginLeft: theme.spacing(3),
+    [theme.breakpoints.down('md')]: {
+        marginLeft: theme.spacing(2),
+    },
     marginRight: theme.spacing(3),
     marginBottom: theme.spacing(1),
     borderRadius: "6px"
@@ -27,7 +30,7 @@ export const ThemeSwitcher = (props) => {
     return (
         <StyledStack direction="row" spacing={2} alignItems="center" justifyContent="center">
             <LightModeRoundedIcon />
-            <StyledSwitch color="default" {...props}/>
+            <StyledSwitch color="default" {...props} />
             <DarkModeRoundedIcon />
         </StyledStack>
     )

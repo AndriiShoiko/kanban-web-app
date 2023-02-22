@@ -19,6 +19,9 @@ const StyledDrawer = styled(Drawer, {
     flexShrink: 0,
     '& .MuiDrawer-paper': {
         width: theme.components.drawer.widthDesktop,
+        [theme.breakpoints.down('md')]: {
+            width: theme.components.drawer.widthTablet,
+        },
         boxSizing: 'border-box',
         ...(darkMode && {
             backgroundColor: theme.palette.common.darkGrey,
@@ -32,6 +35,9 @@ const StyledDrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'start',
     ...theme.mixins.toolbar,
     padding: theme.spacing(4),
+    [theme.breakpoints.down('md')]: {
+        padding: theme.spacing(3),      
+    },
     marginBottom: theme.spacing(2),
 }));
 

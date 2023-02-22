@@ -27,6 +27,9 @@ const StyledMain = styled('main', { shouldForwardProp: (prop) => prop !== 'open'
                 duration: theme.transitions.duration.enteringScreen,
             }),
             marginLeft: theme.components.drawer.widthDesktop,
+            [theme.breakpoints.down('md')]: {
+                marginLeft: theme.components.drawer.widthTablet,
+            }
         }),
     }),
 );
