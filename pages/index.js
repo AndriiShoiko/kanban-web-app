@@ -8,6 +8,7 @@ import { ButtonDestructive } from "../ui/buttons/ButtonDestructive";
 import { ButtonPrimaryL } from "../ui/buttons/ButtonPrimaryL";
 import { ButtonPrimaryS } from "../ui/buttons/ButtonPrimaryS";
 import { ButtonSecondary } from "../ui/buttons/ButtonSecondary";
+import { EmptyBoard } from "../components/Board";
 
 const HomePage = () => {
 
@@ -15,6 +16,7 @@ const HomePage = () => {
 
     return (
         <Layout>
+            <EmptyBoard />
             {/* <Typography variant="h1">Welcome to Next.js!</Typography>
             <Typography variant="h2">Welcome to Next.js!</Typography>
             <Typography variant="h3">Welcome to Next.js!</Typography>

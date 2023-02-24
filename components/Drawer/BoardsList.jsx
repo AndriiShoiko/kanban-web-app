@@ -45,6 +45,7 @@ const TabStyled = styled(Tab, { shouldForwardProp: (prop) => prop !== 'newBoard'
 }));
 
 const headerStyle = (theme) => ({
+    marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     paddingLeft: theme.spacing(4),
     [theme.breakpoints.down('md')]: {

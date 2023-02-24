@@ -102,6 +102,10 @@ export const theme = {
         drawer: {
             widthDesktop: "300px",
             widthTablet: "240px",
+        },
+        header: {
+            heightDesktop: "96px",
+            heightTablet: "80px",
         }
     }
 };

@@ -67,9 +67,9 @@ const dividerStyle = (theme) => ({
 const captionStyle = (theme) => ({
     display: "flex",
     alignItems: "center",
-    minHeight: 96,
+    minHeight: theme.components.header.heightDesktop,
     [theme.breakpoints.down('md')]: {
-        minHeight: 80,
+        minHeight: theme.components.header.heightTablet,
     }
 })
 

@@ -38,7 +38,7 @@ const StyledDrawerHeader = styled('div')(({ theme }) => ({
     [theme.breakpoints.down('md')]: {
         padding: theme.spacing(3),      
     },
-    marginBottom: theme.spacing(2),
+    //marginBottom: theme.spacing(2),
 }));
 
 export const DrawerHeader = () => {
