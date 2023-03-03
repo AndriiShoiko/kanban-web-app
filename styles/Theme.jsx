@@ -106,6 +106,9 @@ export const theme = {
         header: {
             heightDesktop: "96px",
             heightTablet: "80px",
+        },
+        cardTask: {
+            minWidth: 280
         }
     }
 };
