@@ -5,7 +5,7 @@ import userModel from "../db/models/userModel";
 import dbConnect from "../db/dbConnect";
 
 import { addToQueueActivationLink } from "./aws/sqsSendMail";
-import { generateTokens, saveToken } from "./tokenService";
+import { generateTokens, saveToken, removeToken, validateAccessToken, validateRefreshToken, findToken, findRefreshToken } from "./tokenService";
 
 import UserDto from "./dtos/userDto";
 
@@ -46,5 +46,67 @@ export const activationUser = async (activationLink) => {
 
     user.isActivated = true;
     await user.save();
+
+}
+
+export const loginUser = async (email, password) => {
+
+    const findUser = await userModel.findOne({ email });
+    if (!findUser) {
+        throw new Error(`User with email ${email} not found`);
+    }
+
+    const isPassEquals = await bcrypt.compare(password, findUser.password);
+    if (!isPassEquals) {
+        throw new Error(`Password isn't correct.`);
+    }
+
+    const userDto = new UserDto(findUser);
+    const tokens = generateTokens({ ...userDto });
+
+    await saveToken(userDto.id, tokens.refreshToken);
+
+    return {
+        ...tokens,
+        user: userDto
+    }
+
+}
+
+export const logoutUser = async (refreshToken) => {
+
+    if (!refreshToken) {
+        throw new Error("Refresh token isn'n valid.");
+    }
+
+    const token = await removeToken(refreshToken);
+    return token;
+
+}
+
+export const refreshUserToken = async (refreshToken) => {
+
+    if (!refreshToken) {
+        throw new Error("Refresh token isn'n valid.");
+    }
+
+    const userData = validateRefreshToken(refreshToken);
+    const tokenFromDB = await findRefreshToken(refreshToken);
+
+    if (!userData || !tokenFromDB) {
+        throw new Error("User unauthorized");
+    }
+
+    const user = await userModel.findById(userData.id);
+
+    const userDto = new UserDto(user);
+    const tokens = generateTokens({ ...userDto });
+
+    await saveToken(userDto.id, tokens.refreshToken);
+
+    return {
+        ...tokens,
+        user: userDto
+    }
 
 }
