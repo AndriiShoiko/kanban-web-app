@@ -9,6 +9,7 @@ const HomePage = () => {
         <Layout>
             {/* <EmptyBoard /> */}
             {/* <CardTask /> */}
+            
             <BoardTable />
         </Layout>
     )
