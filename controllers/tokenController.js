@@ -1,4 +1,4 @@
-import {registrationToken} from "../service/tokenService";
+import {registrationToken} from "../services/tokenService";
 
 export const registration = async (req, res) => {
 

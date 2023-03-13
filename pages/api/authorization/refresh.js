@@ -4,7 +4,7 @@ export default async function (req, res) {
 
     const { method } = req;
 
-    if (method === "POST") {
+    if (method === "GET") {
         return await refreshToken(req, res);
     }
 

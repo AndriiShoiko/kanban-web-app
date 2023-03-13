@@ -1,5 +1,5 @@
 import { setCookie, getCookies, deleteCookie } from 'cookies-next';
-import { registrationUser, activationUser, loginUser, logoutUser, refreshUserToken } from "../service/userService";
+import { registrationUser, activationUser, loginUser, logoutUser, refreshUserToken } from "../services/userService";
 import validator from 'validator';
 
 export const registration = async (req, res) => {
