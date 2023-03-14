@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 
 const userSchema = new mongoose.Schema(
-    {  
+    {
         password: {
             type: String,
             required: true,
@@ -28,7 +28,12 @@ const userSchema = new mongoose.Schema(
         activationLink: {
             type: String,
         },
+        userRef: {
+            type: String,
+            required: true,
+            unique: true,
+        },
     },
 );
 
-export default  mongoose.models.UserModel || mongoose.model("UserModel", userSchema);
+export default mongoose.models.UserModel || mongoose.model("UserModel", userSchema);

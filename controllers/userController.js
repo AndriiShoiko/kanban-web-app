@@ -1,6 +1,7 @@
 import { setCookie, getCookies, deleteCookie } from 'cookies-next';
 import { registrationUser, activationUser, loginUser, logoutUser, refreshUserToken } from "../services/userService";
 import validator from 'validator';
+import ms from "ms";
 
 export const registration = async (req, res) => {
 
@@ -24,7 +25,7 @@ export const registration = async (req, res) => {
 
         const userData = await registrationUser(email, password);
 
-        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: 30 * 24 * 60 * 60, httpOnly: true });
+        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: ms(process.env.REFRESH_TOKEN_VALID_TIME) / 1000, httpOnly: true });
 
         return res.status(200).json({
             success: true,
@@ -91,7 +92,7 @@ export const login = async (req, res) => {
         }
 
         const userData = await loginUser(email, password);
-        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: 30 * 24 * 60 * 60, httpOnly: true });
+        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: ms(process.env.REFRESH_TOKEN_VALID_TIME) / 1000, httpOnly: true });
 
         return res.status(200).json({
             success: true,
@@ -135,7 +136,8 @@ export const refreshToken = async (req, res) => {
 
         const { refreshToken } = getCookies({ req, res });
         const userData = await refreshUserToken(refreshToken);
-        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: 30 * 24 * 60 * 60, httpOnly: true });
+
+        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: ms(process.env.REFRESH_TOKEN_VALID_TIME) / 1000, httpOnly: true });
 
         return res.status(200).json({
             success: true,
@@ -144,10 +146,10 @@ export const refreshToken = async (req, res) => {
             }
         });
 
-    } catch (error) {
+     } catch (error) {
         return res.status(400).json({
             success: false,
             error: error.message
         });
-    }
+    } 
 }

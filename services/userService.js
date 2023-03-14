@@ -8,6 +8,7 @@ import { addToQueueActivationLink } from "./aws/sqsSendMail";
 import { generateTokens, saveToken, removeToken, validateAccessToken, validateRefreshToken, findToken, findRefreshToken } from "./tokenService";
 
 import UserDto from "./dtos/userDto";
+import { makeUserRef } from "./utils";
 
 dbConnect();
 
@@ -20,8 +21,9 @@ export const registrationUser = async (email, password) => {
 
     const hashPass = await bcrypt.hash(password, 2);
     const activationLink = uuidv4();
+    const userRef = makeUserRef();
 
-    const user = await userModel.create({ email, password: hashPass, activationLink });
+    const user = await userModel.create({ email, password: hashPass, activationLink, userRef });
     await addToQueueActivationLink(email, activationLink);
 
     const userDto = new UserDto(user);
