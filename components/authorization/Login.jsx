@@ -57,16 +57,16 @@ export const Login = () => {
                 aria-describedby="password-helper-text"
               />
             </FormControl>
-            <ButtonPrimaryS fullWidth>Login</ButtonPrimaryS>
+            <ButtonPrimaryS fullWidth>Sign In</ButtonPrimaryS>
             <Typography variant="h4" align="center" sx={{ mt: 1, mb: 1 }}>
               OR
             </Typography>
             <ButtonPrimaryS fullWidth>Continue as Guest</ButtonPrimaryS>
             <Stack direction="row" alignItems="center" justifyContent="space-between" marginTop={3}>
-              <Link href="/" legacyBehavior passHref>
+              <Link href="/forgot-password" legacyBehavior passHref>
                 <LinkPrimary variant="h4">forgot password</LinkPrimary>
               </Link>
-              <Link href="/" legacyBehavior passHref>
+              <Link href="/registration" legacyBehavior passHref>
                 <LinkPrimary variant="h4">Sign Up</LinkPrimary>
               </Link>
             </Stack>

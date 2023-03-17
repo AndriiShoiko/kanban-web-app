@@ -9,7 +9,7 @@ const formControlStyles = (theme) => ({
   marginBottom: theme.spacing(3),
 });
 
-export const Registration = () => {
+export const ForgotPassword = () => {
   return (
     <Layout>
       <Box
@@ -45,17 +45,7 @@ export const Registration = () => {
                 size="medium"
               />
             </FormControl>
-            <FormControl fullWidth sx={formControlStyles}>
-              <FormHelperTextPrimary id="password-helper-text">
-                Password
-              </FormHelperTextPrimary>
-              <TextFieldPrimary
-                placeholder="password"
-                error={false}
-                aria-describedby="password-helper-text"
-              />
-            </FormControl>
-            <ButtonPrimaryS fullWidth>Sign Up</ButtonPrimaryS>
+            <ButtonPrimaryS fullWidth>Send me a letter</ButtonPrimaryS>
           </Box>
         </form>
       </Box>
