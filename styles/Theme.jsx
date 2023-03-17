@@ -27,6 +27,7 @@ export const theme = {
     background: {
       default: lightBG,
       paper: "white",
+      formBackground: "white",
     },
     menuHover: {
       backgroundColor: mainPurple,

@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { getThemeModeFromLocalstorage, setThemeModeToLocalstorage } from "../utils";
 
 export const LIGHT_MODE = "light";
 export const DARK_MODE = "dark";
@@ -15,11 +16,15 @@ export const ThemeContextProvider = (props) => {
     const [mode, setMode] = useState(LIGHT_MODE);
     const [drawerIsOpen, setdrawerOpen] = useState(false);
 
+    useEffect(() => setMode(getThemeModeFromLocalstorage()), []);
+
     const toogleThemeMode = () => {
         if (mode === LIGHT_MODE) {
             setMode(DARK_MODE);
+            setThemeModeToLocalstorage(DARK_MODE);
         } else {
             setMode(LIGHT_MODE);
+            setThemeModeToLocalstorage(LIGHT_MODE);
         }
     }
 
