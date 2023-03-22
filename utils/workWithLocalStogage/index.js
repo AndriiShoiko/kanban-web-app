@@ -1,4 +1,4 @@
-import { LIGHT_MODE } from "../store/ThemeContext";
+import { LIGHT_MODE } from "../../store/ThemeContext";
 
 
 export const setThemeModeToLocalstorage = (mode) => {

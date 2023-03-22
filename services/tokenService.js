@@ -4,42 +4,37 @@ import dbConnect from "../db/dbConnect";
 
 dbConnect();
 
-export const generateTokens = (payload) => {
+export const generateToken = (payload) => {
 
     const accessToken = jwt.sign(payload,
         process.env.ACCESS_TOKEN,
         { expiresIn: process.env.ACCESS_TOKEN_VALID_TIME });
 
-    const refreshToken = jwt.sign(payload,
-        process.env.REFRESH_TOKEN,
-        { expiresIn: process.env.REFRESH_TOKEN_VALID_TIME });
-
     return {
-        accessToken,
-        refreshToken
+        accessToken
     }
 
 }
 
-export const saveToken = async (userId, refreshToken) => {
+export const saveToken = async (userId, accessToken) => {
 
     const tokenData = await tokenModel.findOne({ user: userId });
     if (tokenData) {
-        tokenData.refreshToken = refreshToken;
+        tokenData.accessToken = accessToken;
         return tokenData.save();
     }
 
-    const token = await tokenModel.create({ user: userId, refreshToken });
+    const token = await tokenModel.create({ user: userId, accessToken });
     return token;
 
 }
 
-export const removeToken = async (refreshToken) => {
+export const removeToken = async (accessToken) => {
 
-    const tokenData = await tokenModel.deleteOne({ refreshToken });
+    const tokenData = await tokenModel.deleteOne({ accessToken });
     return tokenData;
 
-}
+} 
 
 export const validateAccessToken = (token) => {
 
@@ -51,25 +46,5 @@ export const validateAccessToken = (token) => {
     } catch (error) {
         return null;
     }
-
-}
-
-export const validateRefreshToken = (token) => {
-
-    try {
-
-        const userData = jwt.verify(token, process.env.REFRESH_TOKEN);
-        return userData;
-
-    } catch (error) {
-        return null;
-    }
-
-}
-
-export const findRefreshToken = async (refreshToken) => {
-
-    const tokenData = await tokenModel.findOne({ refreshToken });
-    return tokenData;
 
 }

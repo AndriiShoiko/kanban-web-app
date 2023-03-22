@@ -21,6 +21,6 @@ const getAll = async (req, res) => {
 
 }
 
-const getAllWithCheckAccess = authMiddleware(accessMiddleware(getAll, 'admin'));
+const getAllWithCheckAccess = authMiddleware(accessMiddleware(getAll, 'user'));
 
 export {getAllWithCheckAccess};

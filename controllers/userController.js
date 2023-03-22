@@ -25,7 +25,7 @@ export const registration = async (req, res) => {
 
         const userData = await registrationUser(email, password);
 
-        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: ms(process.env.REFRESH_TOKEN_VALID_TIME) / 1000, httpOnly: true });
+        setCookie('accessToken', userData.accessToken, { req, res, maxAge: ms(process.env.ACCESS_TOKEN_VALID_TIME) / 1000, httpOnly: true });
 
         return res.status(200).json({
             success: true,
@@ -92,7 +92,7 @@ export const login = async (req, res) => {
         }
 
         const userData = await loginUser(email, password);
-        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: ms(process.env.REFRESH_TOKEN_VALID_TIME) / 1000, httpOnly: true });
+        setCookie('accessToken', userData.accessToken, { req, res, maxAge: ms(process.env.ACCESS_TOKEN_VALID_TIME) / 1000, httpOnly: true });
 
         return res.status(200).json({
             success: true,
@@ -113,9 +113,9 @@ export const logout = async (req, res) => {
 
     try {
 
-        const { refreshToken } = getCookies({ req, res });
-        const token = logoutUser(refreshToken);
-        deleteCookie('refreshToken', { req, res });
+        const { accessToken } = getCookies({ req, res });
+        const token = logoutUser(accessToken);
+        deleteCookie('accessToken', { req, res });
 
         return res.status(200).json({
             success: true,
@@ -128,28 +128,4 @@ export const logout = async (req, res) => {
             error: error.message
         });
     }
-}
-
-export const refreshToken = async (req, res) => {
-
-    try {
-
-        const { refreshToken } = getCookies({ req, res });
-        const userData = await refreshUserToken(refreshToken);
-
-        setCookie('refreshToken', userData.refreshToken, { req, res, maxAge: ms(process.env.REFRESH_TOKEN_VALID_TIME) / 1000, httpOnly: true });
-
-        return res.status(200).json({
-            success: true,
-            data: {
-                ...userData
-            }
-        });
-
-     } catch (error) {
-        return res.status(400).json({
-            success: false,
-            error: error.message
-        });
-    } 
 }

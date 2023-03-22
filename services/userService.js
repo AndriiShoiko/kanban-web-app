@@ -5,7 +5,7 @@ import userModel from "../db/models/userModel";
 import dbConnect from "../db/dbConnect";
 
 import { addToQueueActivationLink } from "./aws/sqsSendMail";
-import { generateTokens, saveToken, removeToken, validateAccessToken, validateRefreshToken, findToken, findRefreshToken } from "./tokenService";
+import { generateToken, removeToken, validateRefreshToken, findRefreshToken, saveToken } from "./tokenService";
 
 import UserDto from "./dtos/userDto";
 import { makeUserRef } from "./utils";
@@ -27,12 +27,12 @@ export const registrationUser = async (email, password) => {
     await addToQueueActivationLink(email, activationLink);
 
     const userDto = new UserDto(user);
-    const tokens = generateTokens({ ...userDto });
+    const token = generateToken({ ...userDto });
 
-    await saveToken(userDto.id, tokens.refreshToken);
+    await saveToken(userDto.id, token.accessToken);
 
     return {
-        ...tokens,
+        ...token,
         user: userDto
     }
 
@@ -64,51 +64,24 @@ export const loginUser = async (email, password) => {
     }
 
     const userDto = new UserDto(findUser);
-    const tokens = generateTokens({ ...userDto });
+    const token = generateToken({ ...userDto });
 
-    await saveToken(userDto.id, tokens.refreshToken);
+    await saveToken(userDto.id, token.accessToken);
 
     return {
-        ...tokens,
+        ...token,
         user: userDto
     }
 
 }
 
-export const logoutUser = async (refreshToken) => {
+export const logoutUser = async (accessToken) => {
 
-    if (!refreshToken) {
-        throw new Error("Refresh token isn'n valid.");
+    if (!accessToken) {
+        throw new Error("Token isn'n valid.");
     }
 
-    const token = await removeToken(refreshToken);
+    const token = await removeToken(accessToken);
     return token;
-
-}
-
-export const refreshUserToken = async (refreshToken) => {
-
-    if (!refreshToken) {
-        throw new Error("Refresh token isn'n valid.");
-    }
-
-    const userData = validateRefreshToken(refreshToken);
-    const tokenFromDB = await findRefreshToken(refreshToken);
-
-    if (!userData || !tokenFromDB) {
-        throw new Error("User unauthorized");
-    }
-
-    const user = await userModel.findById(userData.id);
-
-    const userDto = new UserDto(user);
-    const tokens = generateTokens({ ...userDto });
-
-    await saveToken(userDto.id, tokens.refreshToken);
-
-    return {
-        ...tokens,
-        user: userDto
-    }
 
 }

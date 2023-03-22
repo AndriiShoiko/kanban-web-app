@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getThemeModeFromLocalstorage, setThemeModeToLocalstorage } from "../utils";
+import { getThemeModeFromLocalstorage, setThemeModeToLocalstorage } from "../utils/workWithLocalStogage";
 
 export const LIGHT_MODE = "light";
 export const DARK_MODE = "dark";

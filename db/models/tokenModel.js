@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const TokenSchema = new mongoose.Schema(
     {
-        refreshToken: {
+        accessToken: {
             type: String,
             required: true,
         },
@@ -15,4 +15,4 @@ const TokenSchema = new mongoose.Schema(
 );
 
 module.exports =
-  mongoose.models.TokenModel || mongoose.model("TokenModel", TokenSchema);
+  mongoose.models.Tokens || mongoose.model("Tokens", TokenSchema);
