@@ -1,7 +1,10 @@
 import { setCookie, getCookies, deleteCookie } from 'cookies-next';
-import { registrationUser, activationUser, loginUser, logoutUser, refreshUserToken } from "../services/userService";
+import { registrationUser, activationUser, loginUser, logoutUser } from "../services/userService";
 import validator from 'validator';
 import ms from "ms";
+
+import authMiddleware from "../middlewares/authMiddleware";
+import accessMiddleware from "../middlewares/accessMiddleware";
 
 export const registration = async (req, res) => {
 
@@ -129,3 +132,25 @@ export const logout = async (req, res) => {
         });
     }
 }
+
+const getUserData = async (req, res) => {
+
+    try {
+
+        const userData = req.user;
+        return res.status(200).json({
+            success: true,
+            result: userData
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            error: error.message
+        });
+    }
+
+}
+
+const getUserDataWithCheckAccess = authMiddleware(accessMiddleware(getUserData, 'user'));
+export { getUserDataWithCheckAccess };

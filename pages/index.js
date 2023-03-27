@@ -1,41 +1,35 @@
-import { getCookies } from "cookies-next";
-import { EmptyBoard } from "../components/Board";
-import { CardTask } from "../components/Board/CardTask/CardTask";
-import { BoardTable } from "../components/Board/BoardTable";
-import HeaderAndDrawer from "../components/HeaderAndDrawer/HeaderAndDrawer";
-import { $apiServer } from "../utils/api";
+import { getAllUserBoards } from "../utils/api/boards";
+import { getUserData } from "../utils/api/users";
 
 const HomePage = (props) => {
 
-    return (
-        <HeaderAndDrawer>
-            {/* <EmptyBoard /> */}
-            {/* <CardTask /> */}
-
-            {/* <BoardTable /> */}
-        </HeaderAndDrawer>
-    )
+    //Only redirect
+    return (<></>)
 }
 
 export async function getServerSideProps({ req, res }) {
 
-    const { accessToken } = getCookies({ req, res });
-
     try {
 
-        const responce = await $apiServer.get("/boards", {
-            headers: {
-                "Authorization": "Bearer " + accessToken
-            }
-        });
+        const responseUserData = await getUserData(req, res);
+        const userRef = await responseUserData.userRef;
+
+        const responseAllBoards = await getAllUserBoards(req, res);
+        const boardName = await responseAllBoards[0].name;
+
+        const redirectRef = `/${userRef}/${boardName}`;
+
+        res.writeHead(307, { Location: redirectRef });
+        res.end();
 
         return {
             props: {
-                data: await responce.data,
+                data: { redirectRef },
             }
         }
 
     } catch (error) {
+
         console.error(error.message);
 
         if (error.response.status === 401) {
@@ -48,6 +42,7 @@ export async function getServerSideProps({ req, res }) {
                 data: {},
             }
         }
+
     }
 
 }

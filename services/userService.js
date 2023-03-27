@@ -5,7 +5,7 @@ import userModel from "../db/models/userModel";
 import dbConnect from "../db/dbConnect";
 
 import { addToQueueActivationLink } from "./aws/sqsSendMail";
-import { generateToken, removeToken, validateRefreshToken, findRefreshToken, saveToken } from "./tokenService";
+import { generateToken, removeToken, saveToken, validateAccessToken } from "./tokenService";
 
 import UserDto from "./dtos/userDto";
 import { makeUserRef } from "./utils";

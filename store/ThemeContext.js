@@ -7,14 +7,21 @@ export const DARK_MODE = "dark";
 export const ThemeContext = createContext({
     mode: LIGHT_MODE,
     drawerIsOpen: false,
+    boardsList: [],
+    activeBoardIndex: 0,
+
     toogleThemeMode: () => { },
-    toogleDrawerIsOpen: () => { }
+    toogleDrawerIsOpen: () => { },
+    setBoardsList: () => { },
+    setActiveBoardIndex: () => { }
 });
 
 export const ThemeContextProvider = (props) => {
 
     const [mode, setMode] = useState(LIGHT_MODE);
     const [drawerIsOpen, setdrawerOpen] = useState(false);
+    const [boardsList, setList] = useState([]);
+    const [activeBoardIndex, setIndex] = useState(0);
 
     useEffect(() => setMode(getThemeModeFromLocalstorage()), []);
 
@@ -36,11 +43,23 @@ export const ThemeContextProvider = (props) => {
         }
     }
 
+    const setBoardsList = (list) => {
+        setList(list);
+    }
+
+    const setActiveBoardIndex = (index) => {
+        setIndex(index);
+    }
+
     const context = {
         mode,
         drawerIsOpen,
+        boardsList,
+        activeBoardIndex,
         toogleThemeMode,
-        toogleDrawerIsOpen
+        toogleDrawerIsOpen,
+        setBoardsList,
+        setActiveBoardIndex
     }
 
     return (
