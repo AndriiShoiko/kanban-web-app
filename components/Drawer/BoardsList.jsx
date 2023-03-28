@@ -62,8 +62,16 @@ export const BoardsList = () => {
   const context = useContext(ThemeContext);
 
   const handleClick = (event) => {
+    if (event.target.tabIndex === -1) {
+      return;
+    }
+
     context.setActiveBoardIndex(event.target.tabIndex);
   };
+
+  if (!context.boardsList.length) {
+    return null;
+  }
 
   return (
     <>
@@ -78,11 +86,11 @@ export const BoardsList = () => {
       >
         {context.boardsList.map((element, index) => {
           return (
-            <Link key={index} href={element} passHref legacyBehavior>
+            <Link key={index} href={element.link} passHref legacyBehavior>
               <TabStyled
                 key={index}
                 icon={<DashboardOutlinedIcon sx={{ fontSize: 16 }} />}
-                label={element}
+                label={element.name}
                 iconPosition="start"
                 wrapped
                 component="a"
@@ -93,7 +101,11 @@ export const BoardsList = () => {
           );
         })}
 
-        <Link href="/newBoard" passHref legacyBehavior>
+        <Link
+          href={`${context.boardsList[context.activeBoardIndex].link}/newBoard`}
+          passHref
+          legacyBehavior
+        >
           <TabStyled
             icon={<DashboardCustomizeOutlinedIcon sx={{ fontSize: 16 }} />}
             label="+ Create New Board"

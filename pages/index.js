@@ -1,10 +1,19 @@
+import { useEffect } from "react";
+import { useRouter } from 'next/router';
 import { getAllUserBoards } from "../utils/api/boards";
 import { getUserData } from "../utils/api/users";
+import { serverSideHandlerError } from "../utils/api";
 
-const HomePage = (props) => {
+const HomePage = ({ redirectRef }) => {
+
+    const router = useRouter();
+
+    useEffect(() => {
+        router.push(redirectRef);
+    }, []);
 
     //Only redirect
-    return (<></>)
+    return (<h4>Redirect...</h4>)
 }
 
 export async function getServerSideProps({ req, res }) {
@@ -19,30 +28,19 @@ export async function getServerSideProps({ req, res }) {
 
         const redirectRef = `/${userRef}/${boardName}`;
 
-        res.writeHead(307, { Location: redirectRef });
-        res.end();
-
         return {
             props: {
-                data: { redirectRef },
+                redirectRef,
             }
         }
 
     } catch (error) {
+        serverSideHandlerError(error, req, res);
+    }
 
-        console.error(error.message);
-
-        if (error.response.status === 401) {
-            res.writeHead(307, { Location: '/login' });
-            res.end();
+    return {
+        props: {
         }
-
-        return {
-            props: {
-                data: {},
-            }
-        }
-
     }
 
 }
